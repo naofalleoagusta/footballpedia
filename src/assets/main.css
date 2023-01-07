@@ -2,23 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  margin: 0;
-}
 
 @layer base {
-  h1,
-  h2,
-  h3,
-  h4 {
-    font-family: Roboto Slab, Helvetica, Arial, sans-serif;
-  }
-
   html,
   body,
   #app {
-    min-height: 100vh;
+    @apply text-zinc-200 min-h-screen;
+    font-family: Roboto Slab, Helvetica, Arial, sans-serif;
   }
 
   #app {
