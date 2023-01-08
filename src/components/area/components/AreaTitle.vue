@@ -1,18 +1,22 @@
 <script setup lang="ts">
 import { onBeforeMount, ref } from "vue";
-import { RouterLink, useRoute } from "vue-router";
+import { useRoute } from "vue-router";
 
 import TitleHeader from "@/components/ui_palette/TitleHeader.vue";
+import Skeleton from "@/components/ui_palette/Skeleton.vue";
+import PageNotFound from "@/components/ui_palette/PageNotFound.vue";
+import Breadcrumb from "@/components/ui_palette/Breadcrumb.vue";
 
 import useFetchFootball from "@/hooks/useFetchFootball";
 
 import type { GetAreaDetailType } from "@/types/area";
-import Skeleton from "@/components/ui_palette/Skeleton.vue";
-import PageNotFound from "@/components/ui_palette/PageNotFound.vue";
+import type { BreadcrumbType } from "@/types";
+import { INITIAL_VALUE_BREADCRUMBS } from "@/constant/breadcrumb";
 
 const area = ref<Pick<GetAreaDetailType, "name" | "parentArea"> | null>(null);
 const isError = ref(false);
 const route = useRoute();
+const breadcrumbs = ref<BreadcrumbType[]>(INITIAL_VALUE_BREADCRUMBS);
 
 onBeforeMount(async () => {
   const { data, error } = await useFetchFootball<GetAreaDetailType>({
@@ -32,6 +36,7 @@ onBeforeMount(async () => {
     <Skeleton width="100px" />
   </div>
   <div v-if="area">
+    <Breadcrumb :breadcrumbs="breadcrumbs" />
     <TitleHeader :title="area.name" :subtitle="`${area.parentArea}`" />
   </div>
 </template>

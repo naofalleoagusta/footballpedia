@@ -6,3 +6,5 @@ export type PersonType = {
   dateOfBirth: MaybeNull<string>;
   nationality: MaybeNull<string>;
 };
+
+export type BreadcrumbType = { text: string; route: string };

@@ -8,18 +8,23 @@ import CoachCard from "../components/CoachCard.vue";
 import CompetitionList from "../components/CompetitionList.vue";
 import PlaceHolder from "../components/PlaceHolder.vue";
 import PageNotFound from "@/components/ui_palette/PageNotFound.vue";
+import Breadcrumb from "@/components/ui_palette/Breadcrumb.vue";
 
 import useFetchFootball from "@/hooks/useFetchFootball";
 
-import type { TeamDetailType } from "@/types/team";
 import { NO_CREST_IMG } from "@/config";
 import { tabList } from "../constant";
+import { INITIAL_VALUE_BREADCRUMBS } from "@/constant/breadcrumb";
+
+import type { BreadcrumbType } from "@/types";
+import type { TeamDetailType } from "@/types/team";
 
 const team = ref<TeamDetailType | null>(null);
 const isError = ref(false);
 const route = useRoute();
 const selectedTab = ref(0);
 const tabs = ref(tabList);
+const breadcrumbs = ref<BreadcrumbType[]>(INITIAL_VALUE_BREADCRUMBS);
 
 const changeTab = (index: number) => {
   selectedTab.value = index;
@@ -42,6 +47,13 @@ onBeforeMount(async () => {
   });
   team.value = data.value;
   isError.value = !!error.value;
+  breadcrumbs.value = [
+    ...breadcrumbs.value,
+    {
+      route: data.value?.area.id ? `/area/${data.value?.area.id}` : "/",
+      text: data.value?.area.name || "Area",
+    },
+  ];
 });
 </script>
 
@@ -49,6 +61,7 @@ onBeforeMount(async () => {
   <PageNotFound v-if="isError" text="Team" />
   <PlaceHolder v-if="!team && !isError" />
   <div v-if="team" class="pt-[20px]">
+    <Breadcrumb :breadcrumbs="breadcrumbs"/>
     <div class="flex items-center gap-5">
       <img
         v-lazy="team.crest || NO_CREST_IMG"
