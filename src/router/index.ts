@@ -15,7 +15,7 @@ const router = createRouter({
     },
     {
       path: "/team/:id",
-      team: "team detail",
+      name: "team detail",
       component: () => import("@components/team/views/TeamView.vue"),
     },
     // {
