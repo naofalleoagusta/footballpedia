@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { toRefs, ref, computed } from "vue";
+import { toRefs, ref, computed, nextTick } from "vue";
 import VirtualList from "@virtual-list/vue";
 
 import DataItem from "./components/DataItem.vue";
@@ -36,11 +36,11 @@ const handleOnScroll = (event: Event) => {
 const toggleSearchBar = () => {
   showSearchBar.value = !showSearchBar.value;
   query.value = "";
-  setTimeout(() => {
+  nextTick(() => {
     if (inputRef.value) {
       inputRef.value.focus();
     }
-  }, 300);
+  });
 };
 
 const handleOnChangeInput = (e: Event) => {
@@ -67,7 +67,7 @@ const filteredDatas = computed(() =>
   <div v-if="!!filteredDatas">
     <div v-if="!showSearchBar" class="flex mb-[30px] items-center">
       <h2 class="text-2xl sm:text-3xl underline flex-grow">{{ title }}</h2>
-      <Button id="toggle-search-btn" :on-click="toggleSearchBar">
+      <Button id="toggle-search-btn" v-on:click="toggleSearchBar">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -99,7 +99,7 @@ const filteredDatas = computed(() =>
       <Button
         id="toggle-search-btn"
         class="flex-shrink-0"
-        :on-click="toggleSearchBar"
+        v-on:click="toggleSearchBar"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
