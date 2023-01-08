@@ -3,12 +3,12 @@ import { onBeforeMount, ref } from "vue";
 import { RouterLink, useRoute } from "vue-router";
 
 import useFetchFootball from "@/hooks/useFetchFootball";
-import shortenedPosition from "./helpers/shortenedPosition";
+import shortenedPosition from "../helpers/shortenedPosition";
 
 import type { PlayerType } from "@/types/player";
 import { convertDate, convertToAge } from "@/helpers/convertDate";
 import { NO_CREST_IMG } from "@/config";
-import convertContract from "./helpers/convertContract";
+import convertContract from "../helpers/convertContract";
 
 const player = ref<PlayerType | null>(null);
 const isError = ref(false);
@@ -76,7 +76,7 @@ onBeforeMount(async () => {
             <div class="flex items-baseline md:items-center gap-2">
               <RouterLink
                 v-if="player?.currentTeam?.id"
-                :to="`/team/${player.currentTeam.area.id}`"
+                :to="`/team/${player.currentTeam.id}`"
                 class="underline text-2xl"
               >
                 <h3>
