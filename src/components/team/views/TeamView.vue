@@ -46,7 +46,7 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <PageNotFound v-if="isError" text="Team"/>
+  <PageNotFound v-if="isError" text="Team" />
   <PlaceHolder v-if="!team && !isError" />
   <div v-if="team" class="pt-[20px]">
     <div class="flex items-center gap-5">
@@ -106,18 +106,23 @@ onBeforeMount(async () => {
         <TabPanel
           v-for="(tab, idx) in tabs"
           :key="`${tab}${idx}`"
-          :class="['rounded-xl bg-zinc-800 p-3 outline-none']"
+          :class="['rounded-xl bg-zinc-800 p-3 outline-none flex gap-2']"
         >
-          <component
-            v-bind:is="getComponentToRender(tab)"
-            v-bind:data="
-              tab === 'Players'
-                ? team.squad
-                : tab === 'Coach'
-                ? team.coach
-                : team.runningCompetitions
-            "
-          />
+          <h2 class="text-2xl font-bold md:text-4xl [writing-mode:vertical-lr]">
+            {{ tab }}
+          </h2>
+          <div class="flex-grow">
+            <component
+              v-bind:is="getComponentToRender(tab)"
+              v-bind:data="
+                tab === 'Players'
+                  ? team.squad
+                  : tab === 'Coach'
+                  ? team.coach
+                  : team.runningCompetitions
+              "
+            />
+          </div>
         </TabPanel>
       </TabPanels>
     </TabGroup>

@@ -11,6 +11,7 @@ import { NO_CREST_IMG } from "@/config";
 import convertContract from "../helpers/convertContract";
 import PageNotFound from "@/components/ui_palette/PageNotFound.vue";
 import PlaceHolder from "@/components/team/components/PlaceHolder.vue";
+import CompetitionList from "@/components/team/components/CompetitionList.vue";
 
 const player = ref<PlayerType | null>(null);
 const isError = ref(false);
@@ -106,7 +107,6 @@ onBeforeMount(async () => {
                 player.currentTeam?.contract?.until
               "
             >
-              <p>Contract:</p>
               <span
                 >{{ convertContract(player.currentTeam?.contract?.start) }} -
                 {{ convertContract(player.currentTeam?.contract?.until) }}</span
@@ -114,26 +114,13 @@ onBeforeMount(async () => {
             </div>
           </div>
         </div>
-        <div
-          v-if="player.currentTeam?.runningCompetitions"
-          class="flex mt-[20px] gap-5"
-        >
+        <div class="flex mt-[20px] gap-5">
           <h3 class="text-2xl font-bold md:text-4xl [writing-mode:vertical-lr]">
             Competition
           </h3>
-          <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
-            <div
-              v-for="competition in player.currentTeam.runningCompetitions"
-              :key="competition.id"
-              class="rounded-md bg-zinc-200 p-4 h-fit"
-            >
-              <img
-                v-lazy="competition.emblem || NO_CREST_IMG"
-                :alt="`${competition.name} emblem`"
-                class="w-full h-auto"
-              />
-            </div>
-          </div>
+          <CompetitionList
+            :data="player.currentTeam?.runningCompetitions ?? null"
+          />
         </div>
       </div>
     </div>

@@ -58,8 +58,8 @@ const filteredDatas = computed(() =>
 
 <template>
   <div v-if="isError" class="text-xl">
-    Something is wrong...most likely CORS anywhere is expired/too many request.
-    Please contact me through
+    Something is wrong...most likely CORS anywhere's session is expired/too many
+    request. Please contact me through
     <a class="underline" href="mailto:naofal.leo.agusta98@gmail.com">my email</a
     >.
   </div>
@@ -130,6 +130,12 @@ const filteredDatas = computed(() =>
         </DataItem>
       </template>
     </VirtualList>
-    <div v-else>No entries matched, try another keyword.</div>
+    <div v-else>
+      {{
+        !!query
+          ? "No entries matched, try another keyword."
+          : "No entries found."
+      }}
+    </div>
   </div>
 </template>

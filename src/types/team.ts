@@ -35,16 +35,7 @@ export type TeamDetailType = {
   clubColors: MaybeNull<string>;
   venue: MaybeNull<string>;
   runningCompetitions: MaybeNull<CompetitionType[]>;
-  coach: MaybeNull<
-    PersonType & {
-      firstName: MaybeNull<string>;
-      lastName: MaybeNull<string>;
-      contract: {
-        start: MaybeNull<string>;
-        until: MaybeNull<string>;
-      };
-    }
-  >;
+  coach: MaybeNull<CoachType>;
   squad: MaybeNull<SquadType[]>;
   staff: MaybeNull<PersonType[]>;
   lastUpdated: MaybeNull<string>;
@@ -60,4 +51,13 @@ export type CompetitionType = {
 
 export type SquadType = PersonType & {
   position: "Goalkeeper" | "Defence" | "Midfield" | "Offence";
+};
+
+export type CoachType = PersonType & {
+  firstName: MaybeNull<string>;
+  lastName: MaybeNull<string>;
+  contract: {
+    start: MaybeNull<string>;
+    until: MaybeNull<string>;
+  };
 };
