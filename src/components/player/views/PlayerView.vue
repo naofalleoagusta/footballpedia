@@ -26,7 +26,7 @@ onBeforeMount(async () => {
 </script>
 <template>
   <PageNotFound v-if="isError" text="Player" />
-  <PlaceHolder v-if="!player && !isError"/>
+  <PlaceHolder v-if="!player && !isError" />
   <div v-if="player">
     <div class="pt-[20px] w-full flex gap-2">
       <div class="h-max flex flex-col items-center">
@@ -92,7 +92,9 @@ onBeforeMount(async () => {
                 class="flex-shrink-0"
               >
                 <img
-                  v-lazy="player.currentTeam.area.flag"
+                  v-if="player.currentTeam.area.flag"
+                  :src="player.currentTeam.area.flag"
+                  :srcset="player.currentTeam.area.flag"
                   :alt="`${player.currentTeam.area.name} flag`"
                   class="w-[20px] h-[20px]"
                 />
