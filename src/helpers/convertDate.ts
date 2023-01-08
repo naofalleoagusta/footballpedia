@@ -26,6 +26,5 @@ export const convertDate = (date: string | number) => {
 export const convertToAge = (date: string) => {
   const now = Date.now();
   const birthDate = new Date(date);
-  console.log(now, birthDate.getTime());
   return Math.floor((now - birthDate.getTime()) / ONE_YEAR);
 };

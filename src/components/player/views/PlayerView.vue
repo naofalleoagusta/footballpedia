@@ -10,6 +10,7 @@ import { convertDate, convertToAge } from "@/helpers/convertDate";
 import { NO_CREST_IMG } from "@/config";
 import convertContract from "../helpers/convertContract";
 import PageNotFound from "@/components/ui_palette/PageNotFound.vue";
+import PlaceHolder from "@/components/team/components/PlaceHolder.vue";
 
 const player = ref<PlayerType | null>(null);
 const isError = ref(false);
@@ -25,7 +26,7 @@ onBeforeMount(async () => {
 </script>
 <template>
   <PageNotFound v-if="isError" text="Player" />
-  <div v-if="!player && !isError">loading..</div>
+  <PlaceHolder v-if="!player && !isError"/>
   <div v-if="player">
     <div class="pt-[20px] w-full flex gap-2">
       <div class="h-max flex flex-col items-center">
