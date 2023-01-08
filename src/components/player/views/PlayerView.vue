@@ -5,23 +5,25 @@ import { RouterLink, useRoute } from "vue-router";
 import PageNotFound from "@/components/ui_palette/PageNotFound.vue";
 import PlaceHolder from "@/components/team/components/PlaceHolder.vue";
 import CompetitionList from "@/components/team/components/CompetitionList.vue";
+import Breadcrumb from "@/components/ui_palette/Breadcrumb.vue";
 
 import useFetchFootball from "@/hooks/useFetchFootball";
 import shortenedPosition from "../helpers/shortenedPosition";
 import convertContract from "../helpers/convertContract";
 import { convertDate, convertToAge } from "@/helpers/convertDate";
+import useTitle from "@/hooks/useTitle";
 
 import { NO_CREST_IMG } from "@/config";
 import { INITIAL_VALUE_BREADCRUMBS } from "@/constant/breadcrumb";
 
 import type { BreadcrumbType } from "@/types";
 import type { PlayerType } from "@/types/player";
-import Breadcrumb from "@/components/ui_palette/Breadcrumb.vue";
 
 const player = ref<PlayerType | null>(null);
 const isError = ref(false);
 const breadcrumbs = ref<BreadcrumbType[]>(INITIAL_VALUE_BREADCRUMBS);
 const route = useRoute();
+const title = useTitle();
 
 onBeforeMount(async () => {
   const { data, error } = await useFetchFootball<PlayerType>({
@@ -44,6 +46,7 @@ onBeforeMount(async () => {
       text: data.value?.currentTeam?.name || "Team",
     },
   ];
+  title.value = `${data.value?.name || "Player"} | Footballpedia`;
 });
 </script>
 <template>

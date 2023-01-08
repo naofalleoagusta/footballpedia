@@ -13,6 +13,27 @@
   #app {
     @apply bg-zinc-900;
   }
+  ::-webkit-scrollbar {
+    -webkit-appearance: none;
+  }
+
+  ::-webkit-scrollbar:vertical {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar:horizontal {
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #a1a1aa;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #52525b;
+  }
 }
 
 .list-container {

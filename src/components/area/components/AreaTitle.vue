@@ -8,6 +8,7 @@ import PageNotFound from "@/components/ui_palette/PageNotFound.vue";
 import Breadcrumb from "@/components/ui_palette/Breadcrumb.vue";
 
 import useFetchFootball from "@/hooks/useFetchFootball";
+import useTitle from "@/hooks/useTitle";
 
 import type { GetAreaDetailType } from "@/types/area";
 import type { BreadcrumbType } from "@/types";
@@ -17,6 +18,7 @@ const area = ref<Pick<GetAreaDetailType, "name" | "parentArea"> | null>(null);
 const isError = ref(false);
 const route = useRoute();
 const breadcrumbs = ref<BreadcrumbType[]>(INITIAL_VALUE_BREADCRUMBS);
+const title = useTitle();
 
 onBeforeMount(async () => {
   const { data, error } = await useFetchFootball<GetAreaDetailType>({
@@ -26,6 +28,7 @@ onBeforeMount(async () => {
     ? { name: data.value?.name, parentArea: data.value?.parentArea }
     : null;
   isError.value = !!error.value;
+  title.value = `${data.value?.name || "Area"} | Footballpedia`;
 });
 </script>
 

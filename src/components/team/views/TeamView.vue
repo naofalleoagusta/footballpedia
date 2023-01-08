@@ -11,6 +11,7 @@ import PageNotFound from "@/components/ui_palette/PageNotFound.vue";
 import Breadcrumb from "@/components/ui_palette/Breadcrumb.vue";
 
 import useFetchFootball from "@/hooks/useFetchFootball";
+import useTitle from "@/hooks/useTitle";
 
 import { NO_CREST_IMG } from "@/config";
 import { tabList } from "../constant";
@@ -25,6 +26,7 @@ const route = useRoute();
 const selectedTab = ref(0);
 const tabs = ref(tabList);
 const breadcrumbs = ref<BreadcrumbType[]>(INITIAL_VALUE_BREADCRUMBS);
+const title = useTitle();
 
 const changeTab = (index: number) => {
   selectedTab.value = index;
@@ -54,6 +56,7 @@ onBeforeMount(async () => {
       text: data.value?.area.name || "Area",
     },
   ];
+  title.value = `${data.value?.name || "Team"} | Footballpedia`;
 });
 </script>
 
@@ -61,7 +64,7 @@ onBeforeMount(async () => {
   <PageNotFound v-if="isError" text="Team" />
   <PlaceHolder v-if="!team && !isError" />
   <div v-if="team" class="pt-[20px]">
-    <Breadcrumb :breadcrumbs="breadcrumbs"/>
+    <Breadcrumb :breadcrumbs="breadcrumbs" />
     <div class="flex items-center gap-5">
       <img
         v-lazy="team.crest || NO_CREST_IMG"

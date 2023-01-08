@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import TitleHeader from "@/components/ui_palette/TitleHeader.vue";
 import CountryList from "../components/CountryList.vue";
+
+import useTitle from "@/hooks/useTitle";
+import { onMounted } from "vue";
+
+const title = useTitle();
+
+onMounted(() => {
+  title.value = "Home | Footballpedia";
+});
 </script>
 
 <template>
