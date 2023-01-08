@@ -1,14 +1,38 @@
 <script setup lang="ts">
 import { onBeforeMount, ref } from "vue";
-import { useRoute } from "vue-router";
+import { RouterLink, useRoute } from "vue-router";
+import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
+
+import PlayerList from "../components/PlayerList.vue";
+import CoachCard from "../components/CoachCard.vue";
+import CompetitionList from "../components/CompetitionList.vue";
 
 import useFetchFootball from "@/hooks/useFetchFootball";
 
 import type { TeamDetailType } from "@/types/team";
+import { NO_CREST_IMG } from "@/config";
+import { tabList } from "../constant";
 
 const team = ref<TeamDetailType | null>(null);
 const isError = ref(false);
 const route = useRoute();
+const selectedTab = ref(0);
+const tabs = ref(tabList);
+
+const changeTab = (index: number) => {
+  selectedTab.value = index;
+};
+
+const getComponentToRender = (param: string) => {
+  switch (param) {
+    case "Players":
+      return PlayerList;
+    case "Coach":
+      return CoachCard;
+    default:
+      return CompetitionList;
+  }
+};
 
 onBeforeMount(async () => {
   const { data, error } = await useFetchFootball<TeamDetailType>({
@@ -24,8 +48,79 @@ onBeforeMount(async () => {
     <h1>Team not found.</h1>
     <span>Go back, <RouterLink to="/">Home</RouterLink> ?</span>
   </div>
-  <div v-if="!team">loading..</div>
-  <div v-if="team">
-    {{ team.name }}
+  <div v-if="!team && !isError">loading..</div>
+  <div v-if="team" class="pt-[20px]">
+    <div class="flex items-center gap-5">
+      <img
+        v-lazy="team.crest || NO_CREST_IMG"
+        :src="`${team.name}'s crest'`"
+        class="w-[60px] h-[60px] sm:w-[100px] sm:h-[100px] flex-shrink-0"
+      />
+      <div class="flex-grow break-words">
+        <div class="flex items-center gap-4">
+          <h1 class="text-2xl md:text-3xl">{{ team.name }}</h1>
+          <RouterLink :to="`/area/${team.area.id}`">
+            <img
+              v-lazy="team.area.flag || NO_CREST_IMG"
+              class="w-5 h-5"
+              :alt="`${team.area.name} flag`"
+            />
+          </RouterLink>
+        </div>
+        <div class="flex flex-col text-sm">
+          <span v-if="team.founded"
+            >Founded <time>{{ team.founded }}</time></span
+          >
+          <span v-if="team.venue" class="">
+            {{ team.venue }}
+          </span>
+          <span v-if="team.address" class="">
+            {{ team.address }}
+          </span>
+          <a
+            v-if="team.website"
+            :href="team.website"
+            class="text-zinc-400 hover:text-zinc-200 duration-300 transition-colors break-all"
+            >{{ team.website }}</a
+          >
+        </div>
+      </div>
+    </div>
+    <TabGroup :selectedIndex="selectedTab" @change="changeTab">
+      <TabList class="flex space-x-1 rounded-xl bg-zinc-800 p-1 mt-5">
+        <Tab v-for="tab in tabs" as="template" :key="tab" v-slot="{ selected }">
+          <button
+            :class="[
+              'w-full rounded-lg py-2.5 text-md font-medium leading-5 text-zinc-200 transition-all duration-300',
+              'outline-none',
+              selected
+                ? 'bg-zinc-600 shadow font-bold'
+                : 'text-zinc-400 hover:bg-white hover:text-slate-900',
+            ]"
+          >
+            {{ tab }}
+          </button>
+        </Tab>
+      </TabList>
+
+      <TabPanels class="mt-2">
+        <TabPanel
+          v-for="(tab, idx) in tabs"
+          :key="`${tab}${idx}`"
+          :class="['rounded-xl bg-zinc-800 p-3 outline-none']"
+        >
+          <component
+            v-bind:is="getComponentToRender(tab)"
+            v-bind:data="
+              tab === 'Players'
+                ? team.squad
+                : tab === 'Coach'
+                ? team.coach
+                : team.runningCompetitions
+            "
+          />
+        </TabPanel>
+      </TabPanels>
+    </TabGroup>
   </div>
 </template>
