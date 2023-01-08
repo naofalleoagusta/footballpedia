@@ -1,4 +1,7 @@
+import type { MaybeNull } from "@/types";
+
 export type DataType = {
   name: string;
-  id: number | null;
+  id: MaybeNull<number>;
+  icon: MaybeNull<string>;
 };

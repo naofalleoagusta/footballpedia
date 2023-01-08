@@ -1,3 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import AreaTitle from "../components/AreaTitle.vue";
+import TeamList from "../components/TeamList.vue";
+</script>
 
-<template>Test</template>
+<template>
+  <AreaTitle />
+  <TeamList />
+</template>

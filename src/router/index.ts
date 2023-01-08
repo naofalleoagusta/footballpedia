@@ -10,8 +10,13 @@ const router = createRouter({
     },
     {
       path: "/area/:id",
-      name: "area",
+      name: "area detail",
       component: () => import("@components/area/views/AreaView.vue"),
+    },
+    {
+      path: "/team/:id",
+      team: "team detail",
+      component: () => import("@components/team/views/TeamView.vue"),
     },
     // {
     //   path: "/about",

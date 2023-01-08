@@ -14,7 +14,8 @@ onBeforeMount(async () => {
   const { data, error } = await useFetchFootball<GetAreaReturnType>({
     route: "areas/",
   });
-  areaList.value = data.value?.areas ?? null;
+  areaList.value =
+    data.value?.areas.map((area) => ({ ...area, icon: area.flag })) ?? null;
   isError.value = !!error.value;
 });
 
@@ -22,5 +23,10 @@ const groupedAreas = computed(() => convertToGroupedAreas(areaList.value));
 </script>
 
 <template>
-  <DataList :datas="groupedAreas" :is-error="isError" :title="'Country List'" />
+  <DataList
+    :datas="groupedAreas"
+    :is-error="isError"
+    :title="'Country List'"
+    :route="`area/`"
+  />
 </template>

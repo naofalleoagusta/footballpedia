@@ -1,8 +1,10 @@
+import type { MaybeNull } from ".";
+
 export type AreaType = {
   id: number;
   name: string;
   countryCode: string;
-  flag: string | null;
+  flag: MaybeNull<string>;
   parentAreaId: number | null;
   parentArea:
     | "World"
@@ -13,10 +15,15 @@ export type AreaType = {
     | "N/C America"
     | "South America"
     | null;
+  icon: MaybeNull<string>;
 };
 
 export type GetAreaReturnType = {
   count: number;
   filters: Record<string, any>;
   areas: AreaType[];
+};
+
+export type GetAreaDetailType = AreaType & {
+  childAreas: AreaType[];
 };

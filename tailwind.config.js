@@ -9,6 +9,9 @@ module.exports = {
       fontFamily: {
         "roboto-slap": ["Roboto Slab", "Helvetica", "Arial", "sans-serif"],
       },
+      transitionProperty: {
+        maxHeight: "max-height",
+      },
     },
   },
   plugins: [require("tailwind-scrollbar")({ nocompatible: true })],

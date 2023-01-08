@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import CountryList from "../components/CounryList.vue";
+import TitleHeader from "@/components/ui_palette/TitleHeader.vue";
+import CountryList from "../components/CountryList.vue";
 </script>
 
 <template>
-  <main class="mt-[10vh]">
-    <div id="home-title">
-      <h1 class="text-5xl">Welcome to FootballPedia.</h1>
-      <p class="text-lg mt-2 mb-[10vh]">
-        Access all information about football around the world.
-      </p>
-    </div>
+  <main class="pt-[5vh] list-container">
+    <TitleHeader
+      :title="'Welcome to FootballPedia.'"
+      :subtitle="'Access all information about football around the world.'"
+    />
     <CountryList />
   </main>
 </template>

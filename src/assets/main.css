@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   html,
   body,
@@ -14,4 +13,9 @@
   #app {
     @apply bg-zinc-900;
   }
+}
+
+.list-container {
+  max-height: calc(100vh - 70px);
+  overflow: hidden;
 }
