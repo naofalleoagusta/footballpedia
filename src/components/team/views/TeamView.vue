@@ -6,6 +6,8 @@ import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 import PlayerList from "../components/PlayerList.vue";
 import CoachCard from "../components/CoachCard.vue";
 import CompetitionList from "../components/CompetitionList.vue";
+import PlaceHolder from "../components/PlaceHolder.vue";
+import PageNotFound from "@/components/ui_palette/PageNotFound.vue";
 
 import useFetchFootball from "@/hooks/useFetchFootball";
 
@@ -44,11 +46,8 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div v-if="isError">
-    <h1>Team not found.</h1>
-    <span>Go back, <RouterLink to="/">Home</RouterLink> ?</span>
-  </div>
-  <div v-if="!team && !isError">loading..</div>
+  <PageNotFound v-if="isError" text="Team"/>
+  <PlaceHolder v-if="!team && !isError" />
   <div v-if="team" class="pt-[20px]">
     <div class="flex items-center gap-5">
       <img
