@@ -17,7 +17,11 @@ const player = toRef(props, "player");
     :to="`/player/${player.id}`"
     class="w-full p-2 bg-zinc-600 mb-2 last:mb-0 rounded-md flex gap-3 hover:bg-zinc-50 hover:text-black transition-all duration-500 items-center group"
   >
-    <span class="text-xl font-bold">{{ positionMapper[player.position] }}</span>
+    <span
+      class="text-xl font-bold [writing-mode:vertical-lr]"
+      v-if="!!player.position"
+      >{{ positionMapper[player.position] }}</span
+    >
     <div class="flex-grow text-sm">
       <div class="font-semibold">{{ player.name }}</div>
       <div v-if="player.dateOfBirth">

@@ -28,5 +28,6 @@ const groupedAreas = computed(() => convertToGroupedAreas(areaList.value));
     :is-error="isError"
     :title="'Country List'"
     :route="`area/`"
+    :scroll-threshold="'60px'"
   />
 </template>
