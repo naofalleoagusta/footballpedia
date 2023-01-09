@@ -79,4 +79,6 @@ yarn lint
 
 ## Deployment
 
-I deployed this app on [vercel](https://vercel.com), it's very straightforward, I just need to click a few button and my app is deployed on the web. :D
+I deployed this app on [vercel](https://vercel.com), it's very straightforward, I just need to click a few button and my app is deployed on the web. :D.
+  - https://footballpedia-2.naofalleoagusta.xyz
+  - https://footballpedia.naofalleoagusta.xyz
